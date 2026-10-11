@@ -1,0 +1,39 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+const links = [
+  {
+    href: "/dashboard",
+    label: "Overview",
+    icon: <svg aria-hidden="true" viewBox="0 0 24 24"><rect height="7" rx="1" width="7" x="3" y="3" /><rect height="7" rx="1" width="7" x="14" y="3" /><rect height="7" rx="1" width="7" x="3" y="14" /><rect height="7" rx="1" width="7" x="14" y="14" /></svg>,
+  },
+  {
+    href: "/merchants",
+    label: "Merchants & stores",
+    icon: <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5zM6 9v11h12V9M9 20v-6h6v6" /><path d="M4 9c0 2 3 2 4 0 1 2 3 2 4 0 1 2 3 2 4 0 1 2 4 2 4 0" /></svg>,
+  },
+];
+
+export default function PlatformNav() {
+  const pathname = usePathname();
+
+  return (
+    <nav aria-label="Platform navigation">
+      <p className="nav-label">Workspace</p>
+      {links.map((link) => (
+        <Link
+          className={`nav-link ${pathname === link.href ? "active" : ""}`}
+          href={link.href}
+          key={link.href}
+        >
+          {link.icon}
+          {link.label}
+        </Link>
+      ))}
+      <p className="nav-label nav-label-later">Coming next</p>
+      <span className="nav-link disabled"><span className="nav-dot" /> Audit log</span>
+    </nav>
+  );
+}
