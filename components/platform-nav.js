@@ -14,6 +14,11 @@ const links = [
     label: "Merchants & stores",
     icon: <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 9h16l-1-5H5zM6 9v11h12V9M9 20v-6h6v6" /><path d="M4 9c0 2 3 2 4 0 1 2 3 2 4 0 1 2 3 2 4 0 1 2 4 2 4 0" /></svg>,
   },
+  {
+    href: "/merchant-accounts",
+    label: "Merchant accounts",
+    icon: <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4" /><path d="M4.5 21a7.5 7.5 0 0 1 15 0M18 4v4M16 6h4" /></svg>,
+  },
 ];
 
 export default function PlatformNav() {

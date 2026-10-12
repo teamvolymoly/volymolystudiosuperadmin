@@ -43,4 +43,9 @@ export const platformTenancyApi = {
     "PATCH",
     { status },
   ),
+  updateMerchantStatus: (merchantId, status) => mutate(
+    `/api/platform/management/merchants/${merchantId}/status`,
+    "PATCH",
+    { status },
+  ),
 };

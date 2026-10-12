@@ -79,6 +79,43 @@ test("store status updates are restricted to numeric store identifiers", async (
   assert.equal(calls, 1);
 });
 
+test("merchant account queries and status updates use allowlisted endpoints", async () => {
+  let calls = 0;
+  globalThis.fetch = async (url, options) => {
+    calls += 1;
+    if (options.method === "GET") {
+      assert.equal(url.href, "http://localhost:8000/api/v1/platform/merchants?search=rahul&status=active");
+      return Response.json({ merchants: [], summary: {}, pagination: {} });
+    }
+
+    assert.equal(url.href, "http://localhost:8000/api/v1/platform/merchants/17/status");
+    assert.equal(options.method, "PATCH");
+    return Response.json({ merchant: { id: 17, status: "suspended" } });
+  };
+
+  const listed = await GET(
+    new Request("http://localhost:3001/api/platform/management/merchants?search=rahul&status=active"),
+    { params: Promise.resolve({ path: ["merchants"] }) },
+  );
+  const updated = await PATCH(
+    new Request("http://localhost:3001/api/platform/management/merchants/17/status", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: '{"status":"suspended"}',
+    }),
+    { params: Promise.resolve({ path: ["merchants", "17", "status"] }) },
+  );
+  const rejected = await PATCH(
+    new Request("http://localhost:3001/api/platform/management/merchants/all/status", { method: "PATCH" }),
+    { params: Promise.resolve({ path: ["merchants", "all", "status"] }) },
+  );
+
+  assert.equal(listed.status, 200);
+  assert.equal(updated.status, 200);
+  assert.equal(rejected.status, 404);
+  assert.equal(calls, 2);
+});
+
 test("unlisted management routes never reach Laravel", async () => {
   globalThis.fetch = () => {
     throw new Error("Upstream must not be called");
