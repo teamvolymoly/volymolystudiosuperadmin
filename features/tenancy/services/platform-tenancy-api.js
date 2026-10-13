@@ -36,6 +36,29 @@ async function mutate(path, method, body, retried = false) {
 }
 
 export const platformTenancyApi = {
+  createMerchant: (data) => mutate("/api/platform/management/merchants", "POST", data),
+  resendMerchantInvitation: (merchantId) => mutate(
+    `/api/platform/management/merchants/${merchantId}/invitation`,
+    "POST",
+  ),
+  updateMerchantOrganizationAccess: (merchantId, organizationId, role) => mutate(
+    `/api/platform/management/merchants/${merchantId}/organizations/${organizationId}`,
+    "PUT",
+    { role },
+  ),
+  removeMerchantOrganizationAccess: (merchantId, organizationId) => mutate(
+    `/api/platform/management/merchants/${merchantId}/organizations/${organizationId}`,
+    "DELETE",
+  ),
+  updateMerchantStoreAccess: (merchantId, storeId, role) => mutate(
+    `/api/platform/management/merchants/${merchantId}/stores/${storeId}`,
+    "PUT",
+    { role },
+  ),
+  removeMerchantStoreAccess: (merchantId, storeId) => mutate(
+    `/api/platform/management/merchants/${merchantId}/stores/${storeId}`,
+    "DELETE",
+  ),
   createOrganization: (data) => mutate("/api/platform/management/organizations", "POST", data),
   createStore: (data) => mutate("/api/platform/management/stores", "POST", data),
   updateStoreStatus: (storeId, status) => mutate(

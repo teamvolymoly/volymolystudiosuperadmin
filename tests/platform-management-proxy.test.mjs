@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { afterEach, test } from "node:test";
-import { GET, PATCH, POST } from "../app/api/platform/management/[...path]/route.js";
+import { DELETE, GET, PATCH, POST, PUT } from "../app/api/platform/management/[...path]/route.js";
 
 const originalFetch = globalThis.fetch;
 process.env.API_UPSTREAM_URL = "http://localhost:8000";
@@ -112,6 +112,76 @@ test("merchant account queries and status updates use allowlisted endpoints", as
 
   assert.equal(listed.status, 200);
   assert.equal(updated.status, 200);
+  assert.equal(rejected.status, 404);
+  assert.equal(calls, 2);
+});
+
+test("merchant creation and invitation use allowlisted endpoints", async () => {
+  let calls = 0;
+  globalThis.fetch = async (url, options) => {
+    calls += 1;
+    if (url.pathname.endsWith("/merchants")) {
+      assert.equal(options.method, "POST");
+      assert.equal(options.body, '{"name":"New Merchant","email":"new@example.test"}');
+      return Response.json({ merchant: { id: 21 } }, { status: 201 });
+    }
+    assert.equal(url.href, "http://localhost:8000/api/v1/platform/merchants/21/invitation");
+    assert.equal(options.method, "POST");
+    return Response.json({ message: "Merchant invitation queued." }, { status: 202 });
+  };
+
+  const created = await POST(
+    new Request("http://localhost:3001/api/platform/management/merchants", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: '{"name":"New Merchant","email":"new@example.test"}',
+    }),
+    { params: Promise.resolve({ path: ["merchants"] }) },
+  );
+  const invited = await POST(
+    new Request("http://localhost:3001/api/platform/management/merchants/21/invitation", { method: "POST" }),
+    { params: Promise.resolve({ path: ["merchants", "21", "invitation"] }) },
+  );
+
+  assert.equal(created.status, 201);
+  assert.equal(invited.status, 202);
+  assert.equal(calls, 2);
+});
+
+test("merchant organization and store access mutations require numeric identifiers", async () => {
+  let calls = 0;
+  globalThis.fetch = async (url, options) => {
+    calls += 1;
+    if (options.method === "PUT") {
+      assert.equal(url.href, "http://localhost:8000/api/v1/platform/merchants/21/organizations/8");
+      assert.equal(options.body, '{"role":"owner"}');
+      return Response.json({ merchant: { id: 21 } });
+    }
+    assert.equal(url.href, "http://localhost:8000/api/v1/platform/merchants/21/stores/13");
+    assert.equal(options.method, "DELETE");
+    assert.equal(options.body, undefined);
+    return Response.json({ merchant: { id: 21 } });
+  };
+
+  const assigned = await PUT(
+    new Request("http://localhost:3001/api/platform/management/merchants/21/organizations/8", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: '{"role":"owner"}',
+    }),
+    { params: Promise.resolve({ path: ["merchants", "21", "organizations", "8"] }) },
+  );
+  const removed = await DELETE(
+    new Request("http://localhost:3001/api/platform/management/merchants/21/stores/13", { method: "DELETE" }),
+    { params: Promise.resolve({ path: ["merchants", "21", "stores", "13"] }) },
+  );
+  const rejected = await PUT(
+    new Request("http://localhost:3001/api/platform/management/merchants/all/organizations/8", { method: "PUT" }),
+    { params: Promise.resolve({ path: ["merchants", "all", "organizations", "8"] }) },
+  );
+
+  assert.equal(assigned.status, 200);
+  assert.equal(removed.status, 200);
   assert.equal(rejected.status, 404);
   assert.equal(calls, 2);
 });

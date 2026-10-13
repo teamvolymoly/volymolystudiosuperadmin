@@ -665,6 +665,43 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .organization-card .ui-card-footer { margin-top: auto; color: var(--muted); font-size: 10px; }
 
 /* Merchant account controls */
+.merchant-create-card { margin-top: 18px; }
+.merchant-create-card .ui-card-title { margin-top: 5px; font-size: 20px; }
+.merchant-create-card .ui-card-description { margin-top: 5px; }
+.merchant-create-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.merchant-create-fields > div { display: flex; flex-direction: column; gap: 6px; }
+.merchant-create-fields label,
+.access-assignment-form label { color: #3f3f46; font-size: 11px; font-weight: 650; }
+.merchant-create-fields input,
+.access-assignment-form select {
+  width: 100%;
+  height: 42px;
+  padding: 0 11px;
+  border: 1px solid var(--input);
+  border-radius: 8px;
+  outline: none;
+  color: var(--foreground);
+  background: var(--card);
+  font-size: 12px;
+}
+.merchant-create-fields input:focus,
+.access-assignment-form select:focus { border-color: var(--foreground); box-shadow: 0 0 0 3px rgba(24, 24, 27, .08); }
+.merchant-create-card .ui-card-footer { justify-content: flex-end; }
+.merchant-create-card .ui-card-footer button,
+.access-assignment-form button {
+  min-height: 40px;
+  padding-inline: 16px;
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+.merchant-create-card button:disabled,
+.access-assignment-form button:disabled,
+.access-item button:disabled { cursor: wait; opacity: .55; }
 .merchant-filter-card { margin-top: 14px; }
 .merchant-filter-card > .ui-card-content { padding-block: 18px; }
 .merchant-filters {
@@ -706,8 +743,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .filter-reset { border: 1px solid var(--input); color: #3f3f46; background: var(--card); }
 .merchant-directory { margin-top: 14px; }
 .merchant-account-table { min-width: 980px; }
-.merchant-account-table td:nth-child(2) strong { display: block; color: var(--foreground); font-size: 12px; }
-.merchant-account-table td:nth-child(2) small { display: block; margin-top: 3px; }
+.merchant-account-table td:nth-child(2) small,
+.merchant-account-table td:nth-child(3) small { display: block; margin-top: 5px; }
+.merchant-account-table .selected-row td { background: #fafafa; }
+.merchant-row-actions { display: flex; flex-wrap: wrap; gap: 6px; }
 .verification-badge {
   display: inline-flex;
   padding: 4px 7px;
@@ -732,6 +771,45 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .merchant-pagination a { color: var(--foreground); font-weight: 650; text-decoration: none; }
 .merchant-pagination a:last-child { justify-self: end; }
 .merchant-pagination a:hover { text-decoration: underline; }
+.merchant-access-card { margin-top: 14px; }
+.merchant-access-card .ui-card-title { margin-top: 5px; font-size: 20px; }
+.panel-close {
+  min-height: 32px;
+  padding-inline: 11px;
+  border: 1px solid var(--input);
+  border-radius: 7px;
+  color: #3f3f46;
+  background: var(--card);
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: 700;
+}
+.merchant-access-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.merchant-access-section { min-width: 0; padding: 18px; border: 1px solid var(--border); border-radius: 12px; background: #fafafa; }
+.access-section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.access-section-heading h3 { margin: 0; font-size: 15px; }
+.access-section-heading p { margin: 5px 0 0; color: var(--muted); font-size: 10px; line-height: 1.5; }
+.access-section-heading > span {
+  display: grid;
+  flex: 0 0 auto;
+  min-width: 27px;
+  height: 27px;
+  padding-inline: 7px;
+  border-radius: 7px;
+  color: #fff;
+  background: var(--primary);
+  font-size: 10px;
+  font-weight: 700;
+  place-items: center;
+}
+.access-assignment-form { display: grid; grid-template-columns: minmax(0, 1fr) 110px auto; gap: 8px; margin-top: 16px; }
+.access-list { display: flex; flex-direction: column; gap: 7px; margin-top: 14px; }
+.access-item { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 11px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); }
+.access-item > div { display: flex; min-width: 0; flex-direction: column; gap: 3px; }
+.access-item strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.access-item small { color: var(--muted); font-size: 9px; text-transform: capitalize; }
+.access-item button { border: 0; color: var(--danger); background: transparent; cursor: pointer; font-size: 10px; font-weight: 700; }
+.access-empty { margin: 0; padding: 12px; border: 1px dashed var(--border); border-radius: 8px; color: var(--muted); background: var(--card); font-size: 10px; text-align: center; }
 
 @media (max-width: 1000px) {
   .status-grid { grid-template-columns: 1fr 1fr; }
@@ -739,6 +817,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .tenant-summary { grid-template-columns: 1fr 1fr; }
   .organization-grid { grid-template-columns: 1fr 1fr; }
   .merchant-filters { grid-template-columns: 1fr 1fr; }
+  .merchant-access-grid { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 760px) {
@@ -764,8 +843,11 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .status-card.featured { grid-column: auto; }
   .organization-grid { grid-template-columns: 1fr; }
   .merchant-filters { grid-template-columns: 1fr; }
+  .merchant-create-fields,
+  .access-assignment-form { grid-template-columns: 1fr; }
   .merchant-filters button,
   .filter-reset { width: 100%; }
+  .merchant-create-card .ui-card-footer button { width: 100%; }
 }
 
 @media (max-width: 520px) {

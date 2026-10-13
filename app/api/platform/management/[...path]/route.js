@@ -14,3 +14,11 @@ export async function POST(request, context) {
 export async function PATCH(request, context) {
   return proxyPlatformManagementRequest(request, context);
 }
+
+export async function PUT(request, context) {
+  return proxyPlatformManagementRequest(request, context);
+}
+
+export async function DELETE(request, context) {
+  return proxyPlatformManagementRequest(request, context);
+}
