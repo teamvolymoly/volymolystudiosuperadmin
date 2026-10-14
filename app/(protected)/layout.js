@@ -18,17 +18,12 @@ export default async function ProtectedLayout({ children }) {
         <BrandMark compact />
         <PlatformNav />
         <div className="sidebar-foot">
-          <div className="environment"><span /> Secure platform session</div>
           <LogoutButton />
         </div>
       </aside>
 
       <div className="admin-main">
         <header className="topbar">
-          <div>
-            <span className="topbar-label">Platform administration</span>
-            <strong>Control center</strong>
-          </div>
           <div className="profile-chip">
             <span className="avatar">{initials || "PA"}</span>
             <span><strong>{admin.name}</strong><small>{admin.email}</small></span>

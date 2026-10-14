@@ -26,7 +26,6 @@ export default function PlatformNav() {
 
   return (
     <nav aria-label="Platform navigation">
-      <p className="nav-label">Workspace</p>
       {links.map((link) => (
         <Link
           className={`nav-link ${pathname === link.href ? "active" : ""}`}
@@ -37,8 +36,6 @@ export default function PlatformNav() {
           {link.label}
         </Link>
       ))}
-      <p className="nav-label nav-label-later">Coming next</p>
-      <span className="nav-link disabled"><span className="nav-dot" /> Audit log</span>
     </nav>
   );
 }
