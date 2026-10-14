@@ -218,9 +218,34 @@ button, a { -webkit-tap-highlight-color: transparent; }
   padding: 32px 20px;
 }
 .login-card { width: min(100%, 440px); }
-.login-card-simple { width: min(100%, 384px); }
-.login-card-simple .ui-card-title { font-size: 18px; }
-.login-card-simple .security-badge { white-space: nowrap; }
+.login-card-simple {
+  --card-spacing: clamp(24px, 2.2vw, 32px);
+  width: min(100%, clamp(440px, 38vw, 540px));
+}
+.login-card-simple .ui-card-header {
+  gap: 8px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.login-card-simple .ui-card-title {
+  font-size: clamp(22px, 1.65vw, 26px);
+  line-height: 1.2;
+}
+.login-card-simple .ui-card-description {
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.55;
+}
+.login-card-simple .field-group { gap: 9px; }
+.login-card-simple .ui-label,
+.login-card-simple .field-action-link { font-size: 15px; }
+.login-card-simple .ui-input {
+  height: 48px;
+  padding-inline: 14px;
+  font-size: 15px;
+}
+.login-card-simple .ui-button {
+  min-height: 48px;
+  font-size: 15px;
+}
 .login-form-fields { display: flex; flex-direction: column; gap: 24px; }
 .login-card-actions {
   flex-direction: column;
@@ -941,6 +966,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .login-footer span:last-child { display: none; }
   .login-panel { align-items: flex-start; padding: 24px 14px; }
   .login-card { --card-spacing: 20px; }
+  .login-card-simple {
+    --card-spacing: 22px;
+    width: 100%;
+  }
+  .login-card-simple .ui-card-title { font-size: 22px; }
+  .login-card-simple .ui-card-description,
+  .login-card-simple .ui-label,
+  .login-card-simple .field-action-link,
+  .login-card-simple .ui-input,
+  .login-card-simple .ui-button { font-size: 14px; }
+  .login-card-simple .ui-input,
+  .login-card-simple .ui-button { min-height: 46px; height: 46px; }
   .login-heading .ui-card-title { font-size: 28px; }
   .tenant-summary { grid-template-columns: 1fr 1fr; }
   .tenant-inline-fields { grid-template-columns: 1fr; }

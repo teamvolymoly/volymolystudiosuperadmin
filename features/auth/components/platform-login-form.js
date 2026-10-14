@@ -6,7 +6,6 @@ import { useRef, useState } from "react";
 import { Button } from "../../../components/ui/button";
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
@@ -71,9 +70,6 @@ export default function PlatformLoginForm() {
         <CardDescription>
           Enter your email below to login to your account
         </CardDescription>
-        <CardAction>
-          <span className="security-badge">Restricted area</span>
-        </CardAction>
       </CardHeader>
 
       <CardContent>

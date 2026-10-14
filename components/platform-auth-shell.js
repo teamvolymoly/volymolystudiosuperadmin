@@ -18,7 +18,7 @@ export default function PlatformAuthShell({
   return (
     <main className={`login-page ${pageClassName}`.trim()}>
       <header className="login-header">
-        <BrandMark />
+        <BrandMark compact />
         <span><i /> Secure platform access</span>
       </header>
       <section className="login-panel">
