@@ -10,10 +10,7 @@ export default async function LoginPage() {
   if (admin) redirect("/dashboard");
 
   return (
-    <PlatformAuthShell
-      description="Enter your credentials to access the platform control center."
-      title="Super Admin login"
-    >
+    <PlatformAuthShell standaloneCard>
       <PlatformLoginForm />
     </PlatformAuthShell>
   );
