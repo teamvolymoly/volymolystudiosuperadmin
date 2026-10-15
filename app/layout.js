@@ -1,4 +1,10 @@
+import { Geist } from "next/font/google";
 import "./globals.css";
+
+const geist = Geist({
+  subsets: ["latin"],
+  variable: "--font-geist",
+});
 
 export const metadata = {
   title: {
@@ -12,7 +18,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html className={geist.variable} lang="en">
       <body>{children}</body>
     </html>
   );
