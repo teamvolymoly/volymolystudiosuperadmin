@@ -291,6 +291,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
   margin: 0;
   transform: translateY(-50%);
 }
+.password-input-wrap .password-toggle svg {
+  display: block;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.8;
+}
 .login-heading { display: flex; flex-direction: column; gap: 0; }
 .login-heading .ui-card-title {
   margin-top: 16px;

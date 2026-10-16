@@ -117,11 +117,24 @@ export default function PlatformLoginForm() {
               />
               <button
                 aria-label={showPassword ? "Hide password" : "Show password"}
+                aria-pressed={showPassword}
                 className="password-toggle"
                 onClick={() => setShowPassword((visible) => !visible)}
                 type="button"
               >
-                {showPassword ? "Hide" : "Show"}
+                {showPassword ? (
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="m3 3 18 18" />
+                    <path d="M10.7 5.1A10 10 0 0 1 12 5c4.8 0 8.1 4.2 9 7a11.6 11.6 0 0 1-1.4 2.5" />
+                    <path d="M6.6 6.6A11.4 11.4 0 0 0 3 12c.9 2.8 4.2 7 9 7 1.4 0 2.8-.4 4-1" />
+                    <path d="M14.1 14.1a3 3 0 0 1-4.2-4.2" />
+                  </svg>
+                ) : (
+                  <svg aria-hidden="true" viewBox="0 0 24 24">
+                    <path d="M3 12s3.2-7 9-7 9 7 9 7-3.2 7-9 7-9-7-9-7Z" />
+                    <circle cx="12" cy="12" r="3" />
+                  </svg>
+                )}
               </button>
             </div>
           </div>
