@@ -172,11 +172,12 @@ export default function PlatformLoginForm() {
       onSubmit={verification ? submitVerification : submitCredentials}
     >
       <CardHeader>
-        <CardTitle as="h1">{verification ? "Verify your sign-in" : "Login to your account"}</CardTitle>
+        <span className="login-kicker">{verification ? "Identity verification" : "Welcome back"}</span>
+        <CardTitle as="h1">{verification ? "Verify your sign-in" : "Sign in to Volymoly"}</CardTitle>
         <CardDescription>
           {verification
             ? <>Enter the security code sent to <strong>{maskedEmail}</strong>.</>
-            : "Enter your administrator credentials to continue."}
+            : "Use your Super Admin credentials to access the platform console."}
         </CardDescription>
       </CardHeader>
 
@@ -229,7 +230,7 @@ export default function PlatformLoginForm() {
                     setEmail(event.target.value);
                     if (error) setError("");
                   }}
-                  placeholder="admin@example.com"
+                  placeholder="admin@volymoly.com"
                   spellCheck="false"
                   type="email"
                   value={email}
@@ -288,13 +289,18 @@ export default function PlatformLoginForm() {
       <CardFooter className="login-card-actions">
         <Button disabled={loading} type="submit">
           {loading ? <span aria-hidden="true" className="spinner" /> : null}
-          {loading ? "Please wait…" : verification ? "Verify and continue" : "Continue securely"}
+          {loading ? "Please wait…" : verification ? "Verify and continue" : "Sign in to platform"}
+          {!loading ? <span aria-hidden="true" className="button-arrow">→</span> : null}
         </Button>
         {verification ? (
           <Button disabled={loading} onClick={restart} type="button" variant="outline">
             Back to login
           </Button>
         ) : null}
+        <p className="login-security-note">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><rect height="11" rx="2" width="14" x="5" y="10" /><path d="M8 10V7a4 4 0 0 1 8 0v3" /></svg>
+          Your session is encrypted and isolated from merchant accounts.
+        </p>
       </CardFooter>
     </Card>
   );

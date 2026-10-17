@@ -1,6 +1,6 @@
-export default function BrandMark({ compact = false }) {
+export default function BrandMark({ compact = false, inverse = false }) {
   return (
-    <div className={`brand ${compact ? "brand-compact" : ""}`}>
+    <div className={`brand ${compact ? "brand-compact" : ""} ${inverse ? "brand-inverse" : ""}`.trim()}>
       <span aria-hidden="true" className="brand-mark">
         <span />
         <span />
@@ -8,7 +8,7 @@ export default function BrandMark({ compact = false }) {
       </span>
       <span className="brand-copy">
         <strong>Volymoly</strong>
-        {!compact ? <small>Platform control</small> : null}
+        {!compact ? <small>Super Admin</small> : null}
       </span>
     </div>
   );
