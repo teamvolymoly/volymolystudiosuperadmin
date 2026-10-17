@@ -89,6 +89,38 @@ test("password reset endpoints are explicitly allowlisted", async () => {
   ]);
 });
 
+test("verification and required password change endpoints are explicitly allowlisted", async () => {
+  const requests = [];
+  globalThis.fetch = async (url, options) => {
+    requests.push({ url: url.href, method: options.method, body: options.body });
+    return Response.json({ message: "accepted" }, { status: 202 });
+  };
+
+  const calls = [
+    { path: ["login", "verify"], body: '{"code":"123456"}' },
+    { path: ["login", "resend"], body: "{}" },
+    { path: ["password", "change"], body: '{"password":"Updated!Password456"}' },
+  ];
+
+  for (const call of calls) {
+    const response = await POST(new Request(
+      `http://localhost:3001/api/platform/auth/${call.path.join("/")}`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-CSRF-TOKEN": "csrf-token" },
+        body: call.body,
+      },
+    ), { params: Promise.resolve({ path: call.path }) });
+    assert.equal(response.status, 202);
+  }
+
+  assert.deepEqual(requests, [
+    { url: "http://localhost:8000/api/v1/platform/auth/login/verify", method: "POST", body: '{"code":"123456"}' },
+    { url: "http://localhost:8000/api/v1/platform/auth/login/resend", method: "POST", body: "{}" },
+    { url: "http://localhost:8000/api/v1/platform/auth/password/change", method: "POST", body: '{"password":"Updated!Password456"}' },
+  ]);
+});
+
 test("unlisted routes and methods never reach Laravel", async () => {
   globalThis.fetch = () => {
     throw new Error("Upstream must not be called");

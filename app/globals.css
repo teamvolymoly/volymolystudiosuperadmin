@@ -425,6 +425,92 @@ button, a { -webkit-tap-highlight-color: transparent; }
   place-items: center;
 }
 .form-alert p { margin: 0; line-height: 1.45; }
+.form-notice {
+  display: none;
+  min-height: 42px;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid #b9dfce;
+  border-radius: 8px;
+  color: var(--success);
+  background: var(--success-background);
+  font-size: 12px;
+}
+.form-notice.visible { display: flex; }
+.form-notice > span {
+  display: grid;
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  color: #fff;
+  background: var(--success);
+  font-weight: 800;
+  place-items: center;
+}
+.form-notice p { margin: 0; line-height: 1.45; }
+.verification-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin: -4px auto 0;
+  border-radius: 12px;
+  color: #fff;
+  background: var(--primary);
+  place-items: center;
+}
+.verification-icon svg {
+  width: 25px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1.7;
+}
+.otp-field { text-align: center; }
+.otp-field .ui-input {
+  font-size: 22px;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: .32em;
+  text-align: center;
+}
+.otp-field p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+.verification-resend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.verification-resend button {
+  padding: 3px;
+  border: 0;
+  color: var(--foreground);
+  background: transparent;
+  cursor: pointer;
+  font-weight: 650;
+}
+.verification-resend button:disabled { cursor: default; color: var(--muted); }
+.password-requirements {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--muted-background);
+  font-size: 12px;
+  line-height: 1.45;
+}
+.password-requirements span { color: var(--muted); }
 .login-button,
 .secondary-button {
   display: flex;

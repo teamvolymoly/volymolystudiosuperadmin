@@ -7,7 +7,7 @@ export const metadata = { title: "Administrator sign in" };
 
 export default async function LoginPage() {
   const admin = await getCurrentPlatformAdmin();
-  if (admin) redirect("/dashboard");
+  if (admin) redirect(admin.mustChangePassword ? "/change-password" : "/dashboard");
 
   return (
     <PlatformAuthShell standaloneCard>

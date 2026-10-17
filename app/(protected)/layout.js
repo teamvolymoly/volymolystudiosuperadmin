@@ -2,9 +2,11 @@ import BrandMark from "../../components/brand-mark";
 import PlatformNav from "../../components/platform-nav";
 import LogoutButton from "../../features/auth/components/logout-button";
 import { verifyPlatformSession } from "../../lib/dal/platform-auth";
+import { redirect } from "next/navigation";
 
 export default async function ProtectedLayout({ children }) {
   const { admin } = await verifyPlatformSession();
+  if (admin.mustChangePassword) redirect("/change-password");
   const initials = admin.name
     .split(/\s+/)
     .filter(Boolean)

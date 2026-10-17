@@ -53,6 +53,8 @@ async function request(path, options = {}, csrfRetry = false) {
     error.errors = payload.errors || {};
     error.retryAfter = Number(response.headers.get("retry-after") || 0);
     error.requestId = response.headers.get("x-request-id") || "";
+    error.restartLogin = payload.restart_login === true;
+    error.remainingAttempts = Number(payload.remaining_attempts || 0);
     throw error;
   }
 
@@ -63,6 +65,14 @@ export const platformAuthApi = {
   login: (email, password) => request("/api/platform/auth/login", {
     method: "POST",
     body: JSON.stringify({ email, password }),
+  }),
+  verifyLogin: (code) => request("/api/platform/auth/login/verify", {
+    method: "POST",
+    body: JSON.stringify({ code }),
+  }),
+  resendLoginCode: () => request("/api/platform/auth/login/resend", {
+    method: "POST",
+    body: "{}",
   }),
   logout: () => request("/api/platform/auth/logout", {
     method: "POST",
@@ -79,6 +89,16 @@ export const platformAuthApi = {
       body: JSON.stringify({
         email,
         token,
+        password,
+        password_confirmation: passwordConfirmation,
+      }),
+    },
+  ),
+  changePassword: ({ password, passwordConfirmation }) => request(
+    "/api/platform/auth/password/change",
+    {
+      method: "POST",
+      body: JSON.stringify({
         password,
         password_confirmation: passwordConfirmation,
       }),
